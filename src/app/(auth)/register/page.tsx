@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import * as apiClient from "@/lib/api-client";
 import Link from "next/link";
 
 export type RegisterFormProps = {
@@ -18,8 +20,19 @@ const Register = ({}: RegisterFormProps) => {
 
     const { register, watch, handleSubmit, formState: { errors } } = useForm<RegisterFormProps>()
 
+    const mutation = useMutation({
+        onMutate : apiClient.register,
+        onSuccess: () => {
+            console.log('success')
+        },
+        onError: (error) => {
+            console.log(error)
+        }
+    })
+
     const onSubmit = handleSubmit((data) => {
         console.log(data)
+        mutation.mutate(data)
     })
 
     return (
