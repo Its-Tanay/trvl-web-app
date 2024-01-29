@@ -16,6 +16,8 @@ export default function AuthLayout({
                     alt="auth-cover"
                     style={{objectFit: "cover"}}
                     fill={true}
+                    sizes="100%"
+                    priority={true}
                 />
             </div>
             <div className="flex flex-col md:w-3/5 w-screen border-l px-6 md:px-12 items-center md:items-start">

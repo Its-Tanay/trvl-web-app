@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import * as apiClient from "@/lib/api-client";
 import Link from "next/link";
+import { useToast } from "@/components/ui/toasts/use-toast";
 
 export type RegisterFormProps = {
     firstName: string;
@@ -18,15 +19,17 @@ export type RegisterFormProps = {
 
 const Register = ({}: RegisterFormProps) => {
 
+    const {toast} = useToast();
+
     const { register, watch, handleSubmit, formState: { errors } } = useForm<RegisterFormProps>()
 
     const mutation = useMutation({
-        onMutate : apiClient.register,
+        mutationFn: apiClient.register,
         onSuccess: () => {
-            console.log('success')
+            toast({description: "Registration Successful !", variant: "default"})
         },
         onError: (error) => {
-            console.log(error)
+            toast({description: error.message, variant: "destructive"})
         }
     })
 
