@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 //import { Inter } from "next/font/google";
 import "./globals.css";
 import Provider from "@/lib/providers";
-import { AppContextProvider } from "@/contexts/AppContext";
 import { Toaster } from "@/components/ui/toasts/toaster";
+import { AppContextProvider } from "@/contexts/AppContext";
+import App from "next/app";
 
 //const inter = Inter({ subsets: ["latin"] });
 
@@ -21,10 +22,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
           <Provider>
-              <AppContextProvider>
-                  {children}
-                  <Toaster />
-              </AppContextProvider>
+            <AppContextProvider>
+              {children}
+              <Toaster />
+            </AppContextProvider>
           </Provider>
       </body>
     </html>

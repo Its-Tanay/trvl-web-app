@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import * as apiClient from "@/lib/api-client";
 import Link from "next/link";
 import { useToast } from "@/components/ui/toasts/use-toast";
+import { useRouter } from "next/navigation";
 
 export type RegisterFormProps = {
     firstName: string;
@@ -21,12 +22,15 @@ const Register = ({}: RegisterFormProps) => {
 
     const {toast} = useToast();
 
+    const router = useRouter();
+
     const { register, watch, handleSubmit, formState: { errors } } = useForm<RegisterFormProps>()
 
     const mutation = useMutation({
         mutationFn: apiClient.register,
         onSuccess: () => {
-            toast({description: "Registration Successful !", variant: "default"})
+            toast({description: "Registration Successful !", variant: "default"});
+            router.push("/login");
         },
         onError: (error) => {
             toast({description: error.message, variant: "destructive"})
