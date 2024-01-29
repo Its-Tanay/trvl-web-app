@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as apiClient from "@/lib/api-client";
 import { useToast } from "@/components/ui/toasts/use-toast";
 
@@ -16,6 +16,8 @@ export type LoginProps = {
 
 const Login = ({}: LoginProps) => {
 
+    const queryClient  = useQueryClient();
+
     const {toast} = useToast();
 
     const { register, handleSubmit, formState: {errors} } = useForm<LoginProps>();
@@ -23,8 +25,8 @@ const Login = ({}: LoginProps) => {
     const mutation = useMutation({
         mutationFn: apiClient.Login,
         onSuccess: async () => {
-            console.log("Login Successful")
             toast({description: "User logged in !", variant: "default"});
+            await queryClient.invalidateQueries({queryKey: ["validateToken"]});
         },
         onError: async (error: Error) => {
             console.log("Login Failed")

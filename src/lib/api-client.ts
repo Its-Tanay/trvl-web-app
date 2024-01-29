@@ -39,6 +39,19 @@ export const Login = async (formData: LoginProps) => {
     }
 }
 
+export const Logout = async () => {
+    const res = await fetch(`${API_BASE_URL}/api/auth/logout`,
+        {
+            credentials: 'include',
+            method: 'POST',
+        })
+
+    const resBody = await res.json();
+
+    if(!res.ok) {
+        throw new Error(resBody.message)
+    }
+}
 
 export const validateToken = async () => {
     const res = await fetch(`${API_BASE_URL}/api/auth/validate-token`,

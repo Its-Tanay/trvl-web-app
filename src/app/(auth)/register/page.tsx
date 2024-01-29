@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as apiClient from "@/lib/api-client";
 import Link from "next/link";
 import { useToast } from "@/components/ui/toasts/use-toast";
@@ -20,6 +20,8 @@ export type RegisterFormProps = {
 
 const Register = ({}: RegisterFormProps) => {
 
+    const queryClient  = useQueryClient();
+
     const {toast} = useToast();
 
     const router = useRouter();
@@ -28,8 +30,9 @@ const Register = ({}: RegisterFormProps) => {
 
     const mutation = useMutation({
         mutationFn: apiClient.register,
-        onSuccess: () => {
+        onSuccess: async () => {
             toast({description: "Registration Successful !", variant: "default"});
+            await queryClient.invalidateQueries({queryKey: ["validateToken"]});
             router.push("/login");
         },
         onError: (error) => {
