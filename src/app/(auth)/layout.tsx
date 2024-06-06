@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import darkTextLogo from '@/assets/branding/logo-text-dark.svg';
-import authCover from '@/assets/authCover.jpg';
+import { authBgCover } from "@/assets/assets";
+import { logoTextDark } from "@/assets/assets";
 
 export default function AuthLayout({
     children
@@ -12,7 +12,7 @@ export default function AuthLayout({
         <div className="flex min-w-screen min-h-screen">
             <div className="hidden md:block w-2/5 overflow-hidden relative">
                 <Image
-                    src={authCover}
+                    src={authBgCover}
                     alt="auth-cover"
                     style={{objectFit: "cover"}}
                     fill={true}
@@ -22,9 +22,10 @@ export default function AuthLayout({
             </div>
             <div className="flex flex-col md:w-3/5 w-screen border-l px-6 md:px-12 items-center md:items-start">
                 <Image
-                    src={darkTextLogo}
+                    src={logoTextDark}
                     alt="dark-branding"
                     width={200}
+                    height={50}
                 />
                 {children}
             </div>
